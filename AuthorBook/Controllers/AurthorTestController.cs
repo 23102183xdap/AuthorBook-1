@@ -23,7 +23,8 @@ namespace AuthorBook.Controllers
         public IAuthorRepository _authorRep { get; set; }
         //Methods that calls the database.
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Aurthor>>> GetAuthors()
+        // public async Task<ActionResult<IEnumerable<Aurthor>>> GetAuthors()
+        public async Task<IActionResult> getAuthors()
         {
             try
             {
@@ -114,10 +115,10 @@ namespace AuthorBook.Controllers
             {
                 return Problem(e.Message);
             }
-            
+
         }
 
-        
+
 
 
     }

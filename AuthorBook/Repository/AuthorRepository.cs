@@ -30,6 +30,7 @@ namespace AuthorBook.Repository
             //throw new NotImplementedException();
         }
 
+       // public async Task<List<Aurthor>> getAuthors()
         public async Task<List<Aurthor>> getAuthors()
         {
             var author =  await _context.authors.ToListAsync();
