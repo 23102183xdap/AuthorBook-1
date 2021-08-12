@@ -31,8 +31,10 @@ namespace AuthorBook.Controllers
                 var authors = await _authorRep.getAuthors();
                 if (authors == null)
                 {
-                    return NoContent();
+                    return StatusCode(StatusCodes.Status404NotFound, authors);
                 }
+                else if (authors.Count == 0) { return NoContent(); }// test if the array is empty
+
                 return Ok(authors);
             }
             catch (Exception e)
@@ -56,7 +58,7 @@ namespace AuthorBook.Controllers
 
         //[HttpPost]
         [HttpPost]
-        public async Task<ActionResult<Aurthor>> PostAurthor(Aurthor aurthor)
+        public async Task<IActionResult> PostAurthor(Aurthor aurthor)
         {
             // IMpl Try catch in here.
             //Her inde skal vi kalde create.
@@ -66,10 +68,12 @@ namespace AuthorBook.Controllers
 
                 if (aurthor == null)
                 {
-                    return NoContent();
+                    return BadRequest();
                 }
-                return await _authorRep.create(aurthor);
+                //  return await _authorRep.create(aurthor);
                 // CreatedAtAction("GetAurthor", new { id = aurthor.id }, aurthor);
+                Aurthor createdAuthor = await _authorRep.create(aurthor);
+                return Created("", createdAuthor);
 
             }
             catch (Exception e)

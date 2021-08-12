@@ -18,35 +18,43 @@ namespace AuthorBook.Test
 
     public class AuthorRepositoryTest
     {
+        Mock<IAuthorRepository> dataSource = new Mock<IAuthorRepository>();
+        AurthorTestController classThatIsTested;
+
+        public AuthorRepositoryTest()
+        {
+            classThatIsTested = new AurthorTestController(dataSource.Object);
+        }
         [Fact]
         public async void getAll_HTTPRespone200_whenDataExists()
         {
             // Arrange - Opsætning => varriable init
             // objcontroller and mok data.
-            var dataSource = new Mock<IAuthorRepository>();
+            //Mock<IAuthorRepository> dataSource = new Mock<IAuthorRepository>();
             List<Aurthor> authorList = new List<Aurthor>();
             authorList.Add(new Aurthor());
             authorList.Add(new Aurthor());
-             dataSource.Setup(s => s.getAuthors()).ReturnsAsync(authorList);
+            dataSource.Setup(s => s.getAuthors()).ReturnsAsync(authorList);
 
             // Act - handling => prøve mit data af
-            AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
+            //AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
+
             IActionResult result = await classThatIsTested.getAuthors();
 
             // Assert - verfocer p, kegjar gjort det godt nok.
             IStatusCodeActionResult statusCodeResult = (IStatusCodeActionResult)result;
             // CHange iactionresult in respository.
-            Assert.Equal(200,statusCodeResult.StatusCode);
+            Assert.Equal(200, statusCodeResult.StatusCode);
 
 
         }
-        /*
+
         [Fact]
         public async Task getAll_shouldReturn200_whenDataExists()
         {
             // arrange
             // •    Instans with moq – new Mock<what I am trying to mock and it has to be abstract>(); 
-            var dataSource = new Mock<IAuthorRepository>();
+            //var dataSource = new Mock<IAuthorRepository>();
             List<Aurthor> authorList = new List<Aurthor>();
             authorList.Add(new Aurthor());
             authorList.Add(new Aurthor());
@@ -55,8 +63,8 @@ namespace AuthorBook.Test
                 .Setup(s => s.getAuthors())
                 .ReturnsAsync(authorList);
             // act
-            var classThatIsTested = new AurthorTestController(dataSource.Object);
-            var result = await classThatIsTested.getAll();
+            //var classThatIsTested = new AurthorTestController(dataSource.Object);
+            var result = await classThatIsTested.getAuthors();
             //assert
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(200, statusCodeResult.StatusCode);
@@ -67,17 +75,14 @@ namespace AuthorBook.Test
         {
             // arrange
             // •    Instans with moq – new Mock<what I am trying to mock and it has to be abstract>(); 
-            var dataSource = new Mock<IAuthorRepository>();
+            //var dataSource = new Mock<IAuthorRepository>();
             List<Aurthor> authorList = new List<Aurthor>();
-            //authorList.Add(new Author());
-            //authorList.Add(new Author());
-
             dataSource
-                .Setup(s => s.getAllAuthorsAndBooks())
+                .Setup(s => s.getAuthors())
                 .ReturnsAsync(authorList);
             // act
-            var classThatIsTested = new AurthorTestController(dataSource.Object);
-            var result = await classThatIsTested.getAll();
+            // AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
+            var result = await classThatIsTested.getAuthors();
             //assert
             var statusCodeResult = (IStatusCodeActionResult)result;
             Assert.Equal(204, statusCodeResult.StatusCode);
@@ -87,21 +92,53 @@ namespace AuthorBook.Test
         public async Task getAll_shouldReturn500_whenAuthorDoesNotExists()
         {
             // arrange
-            var dataSource = new Mock<IAuthorRepository>();
+           // var dataSource = new Mock<IAuthorRepository>();
             List<Aurthor> authorList = null;
-            //authorList.Add(new Author());
-            //authorList.Add(new Author());
-
             dataSource
-                .Setup(s => s.getAllAuthorsAndBooks())
+                .Setup(s => s.getAuthors())
                 .ReturnsAsync(authorList);
             // act
-            var classThatIsTested = new AurthorTestController(dataSource.Object);
-            var result = await classThatIsTested.getAll();
+           // var classThatIsTested = new AurthorTestController(dataSource.Object);
+            var result = await classThatIsTested.getAuthors();
             //assert
             var statusCodeResult = (IStatusCodeActionResult)result;
-            Assert.Equal(500, statusCodeResult.StatusCode);
+            Assert.Equal(404, statusCodeResult.StatusCode);
         }
-        */
+        [Fact]
+
+        public async Task create_shouldReturn201_whenCreated()
+        {
+            Aurthor author = new Aurthor();
+            dataSource.Setup(s => s.create(author)).ReturnsAsync(author);
+
+            // Act - handling => prøve mit data af
+            //AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
+
+            var result = await classThatIsTested.PostAurthor(author);
+
+            // Assert - verfocer p, kegjar gjort det godt nok.
+            var statusCodeResult = (IStatusCodeActionResult)result;
+            // CHange iactionresult in respository.
+            Assert.Equal(201, statusCodeResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task create_shouldReturn400_badRequest()
+        {
+            Aurthor author = null;
+
+            dataSource.Setup(s => s.create(author)).ReturnsAsync(author);
+
+            // Act - handling => prøve mit data af
+            //AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
+
+            var result = await classThatIsTested.PostAurthor(author);
+
+            // Assert - verfocer p, kegjar gjort det godt nok.
+            var statusCodeResult = (IStatusCodeActionResult)result;
+            // CHange iactionresult in respository.
+            Assert.Equal(400, statusCodeResult.StatusCode);
+        }
+
     }
 }
