@@ -40,7 +40,7 @@ namespace AuthorBook.Repository
         {
             Aurthor author = await _context.authors.Where(a => a.id == id).FirstOrDefaultAsync();
 
-                var books = await _context.Book.Where(e => e.aurthorId == author.id).ToListAsync();
+                var books = await _context.books.Where(e => e.aurthorId == author.id).ToListAsync();
 
             return null;
         }

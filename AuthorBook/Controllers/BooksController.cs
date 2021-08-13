@@ -25,14 +25,14 @@ namespace AuthorBook.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBook()
         {
-            return await _context.Book.ToListAsync();
+            return await _context.books.ToListAsync();
         }
 
         // GET: api/Books/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-            var book = await _context.Book.FindAsync(id);
+            var book = await _context.books.FindAsync(id);
 
             if (book == null)
             {
@@ -78,7 +78,7 @@ namespace AuthorBook.Controllers
         [HttpPost]
         public async Task<ActionResult<Book>> PostBook(Book book)
         {
-            _context.Book.Add(book);
+            _context.books.Add(book);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBook", new { id = book.id }, book);
@@ -88,13 +88,13 @@ namespace AuthorBook.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            var book = await _context.Book.FindAsync(id);
+            var book = await _context.books.FindAsync(id);
             if (book == null)
             {
                 return NotFound();
             }
 
-            _context.Book.Remove(book);
+            _context.books.Remove(book);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace AuthorBook.Controllers
 
         private bool BookExists(int id)
         {
-            return _context.Book.Any(e => e.id == id);
+            return _context.books.Any(e => e.id == id);
         }
     }
 }

@@ -1,5 +1,6 @@
 using AuthorBook.Env;
 using AuthorBook.Repository;
+using AuthorBook.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,7 @@ namespace AuthorBook
             options.UseSqlServer(Configuration.GetConnectionString("Connection")));
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IAuthorServices, AuthorServices>();
             //services.AddMvc();
 
             //var connection = @"Server=LAPTOP-MANISH; Database=ABDatabase; Trusted_Connection=True;";
@@ -48,7 +50,7 @@ namespace AuthorBook
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Køre hver gang api kalder.
+            // Kï¿½re hver gang api kalder.
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

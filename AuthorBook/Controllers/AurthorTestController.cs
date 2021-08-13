@@ -66,9 +66,10 @@ namespace AuthorBook.Controllers
             {
                 // Test if creat or not created.
 
-                if (aurthor == null)
+                if (aurthor == null || !ModelState.IsValid)
                 {
-                    return BadRequest();
+                    return BadRequest(ModelState);
+
                 }
                 //  return await _authorRep.create(aurthor);
                 // CreatedAtAction("GetAurthor", new { id = aurthor.id }, aurthor);
@@ -81,6 +82,7 @@ namespace AuthorBook.Controllers
                 return Problem(e.Message);
             }
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Aurthor>> getAuthor(int id)
         {

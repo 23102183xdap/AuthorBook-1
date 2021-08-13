@@ -21,7 +21,7 @@ namespace AuthorBook.Repository
         public async Task<Book> createBook(Book book)
         {
             book.createdAt = DateTime.UtcNow;
-            _context.Book.Add(book);
+            _context.books.Add(book);
             await _context.SaveChangesAsync();
             return book;
             
@@ -29,10 +29,10 @@ namespace AuthorBook.Repository
 
         public async Task<ActionResult> delete(int id)
         {
-            Book book = await _context.Book.FindAsync(id);
+            Book book = await _context.books.FindAsync(id);
             if (book != null)
             {
-                _context.Book.Remove(book);
+                _context.books.Remove(book);
                 await _context.SaveChangesAsync();
 
             }
@@ -42,19 +42,20 @@ namespace AuthorBook.Repository
 
         public async Task<Book> getBook(int id)
         {
-            Book book = await _context.Book.FindAsync(id);
+            Book book = await _context.books.FindAsync(id);
             return book;
         }
 
 
         public async Task<List<Book>> getBooks()
         {
-            return await _context.Book.ToListAsync();
+            return await _context.books.ToListAsync();
         }
 
-        public Task<Book> getBooksAuthor()
+        public async Task<Book> getBooksAuthor()
         {
-            throw new NotImplementedException();
+            List<Book> books = await _context.books.ToListAsync();
+            return null;
         }
 
         public async Task<Book> updateBook(int id, Book book)

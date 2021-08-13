@@ -89,7 +89,7 @@ namespace AuthorBook.Test
         }
 
         [Fact]
-        public async Task getAll_shouldReturn500_whenAuthorDoesNotExists()
+        public async Task getAll_shouldReturn404_whenAuthorDoesNotExists()
         {
             // arrange
            // var dataSource = new Mock<IAuthorRepository>();
@@ -108,13 +108,17 @@ namespace AuthorBook.Test
 
         public async Task create_shouldReturn201_whenCreated()
         {
-            Aurthor author = new Aurthor();
-            dataSource.Setup(s => s.create(author)).ReturnsAsync(author);
+            Aurthor authorTest = new Aurthor();
+            authorTest.id = 20;
+            authorTest.firstname = "Manish";
+            authorTest.lastname = "Shrestha";
+            authorTest.createdAt = DateTime.UtcNow;
+            dataSource.Setup(s => s.create(authorTest)).ReturnsAsync(authorTest);
 
             // Act - handling => prøve mit data af
             //AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
 
-            var result = await classThatIsTested.PostAurthor(author);
+            var result = await classThatIsTested.PostAurthor(authorTest);
 
             // Assert - verfocer p, kegjar gjort det godt nok.
             var statusCodeResult = (IStatusCodeActionResult)result;
@@ -125,14 +129,18 @@ namespace AuthorBook.Test
         [Fact]
         public async Task create_shouldReturn400_badRequest()
         {
-            Aurthor author = null;
+            Aurthor authorTest = new Aurthor();
+            authorTest.id = 20;
+            authorTest.firstname = "Manish";
+            authorTest.lastname = "Shrestha";
+            authorTest.createdAt = DateTime.UtcNow;
 
-            dataSource.Setup(s => s.create(author)).ReturnsAsync(author);
+            dataSource.Setup(s => s.create(authorTest)).ReturnsAsync(authorTest);
 
             // Act - handling => prøve mit data af
             //AurthorTestController classThatIsTested = new AurthorTestController(dataSource.Object);
 
-            var result = await classThatIsTested.PostAurthor(author);
+            var result = await classThatIsTested.PostAurthor(null);
 
             // Assert - verfocer p, kegjar gjort det godt nok.
             var statusCodeResult = (IStatusCodeActionResult)result;
