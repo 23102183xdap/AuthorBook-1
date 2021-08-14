@@ -1,4 +1,5 @@
-﻿using AuthorBook.DTO;
+﻿using AuthorBook.Domain;
+using AuthorBook.DTO;
 using AuthorBook.Repository;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,11 @@ namespace AuthorBook.Services
 
         public async Task<AuthorDTO> getAuthorById(int id)
         {
+            Aurthor authorDto = await _authorRepository.getAuthor(id);
             AuthorDTO dto = new AuthorDTO
             {
-                firstname = "Manish",
-                lastname = "Hansen"
+                firstname = authorDto.firstname,
+                lastname = authorDto.lastname
             };
             return dto;
         }

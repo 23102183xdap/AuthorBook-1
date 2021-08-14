@@ -96,7 +96,26 @@ namespace AuthorBook.Controllers
             }
 
         }
+        [HttpGet("{id}/Aurthor")]
+        public async Task<ActionResult<Aurthor>> getBooksAuthor(int id)
+        {
+            try
+            {
+                Book book = await _context.getBook(id);
+                if(book == null)
+                {
+                    return NotFound();
+                }
+                var author = await _context.getBooksAuthor(book.id);
+                return Ok(author);
+            }
+            catch (Exception e)
+            {
 
+                return Problem(e.Message);
+
+            }
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> updateBook(int id, Book book)
