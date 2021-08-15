@@ -12,7 +12,8 @@ namespace AuthorBook.Repository
         Task<Book> createBook(Book book);
         Task<List<Book>> getBooks();
         Task<Book> getBook(int id);
-        Task<Book> getBooksAuthor();
+        Task<Aurthor> getBooksAuthor(int bookId);
+
         Task<ActionResult> delete(int id);
         Task<Book> updateBook(int id, Book book);
 

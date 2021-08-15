@@ -56,6 +56,26 @@ namespace AuthorBook.Controllers
 
         }
 
+        [HttpGet("{id}/book")]
+        public async Task<IActionResult> getAuthorBooks(int id)
+        {
+            try
+            {
+                var author = await _authorRep.getAuthor(id);
+
+                if (author == null)
+                {
+                    return NoContent();
+                }
+                var books = await _authorRep.getAuthorsBooks(author.id);
+                return Ok(books);
+            }
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+
+            }
+        }
         //[HttpPost]
         [HttpPost]
         public async Task<IActionResult> PostAurthor(Aurthor aurthor)
@@ -125,7 +145,6 @@ namespace AuthorBook.Controllers
         }
 
 
-
-
+        
     }
 }

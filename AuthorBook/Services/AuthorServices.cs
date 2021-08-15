@@ -37,8 +37,6 @@ namespace AuthorBook.Services
 
         public async Task<AuthorDTO> getAuthorById(int id)
         {
-            Aurthor authorDto = await _authorRepository.getAuthor(id);
-
             AuthorDTO dto = new AuthorDTO
             {
                 firstname = authorDto.firstname,

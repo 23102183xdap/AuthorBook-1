@@ -11,6 +11,6 @@ namespace AuthorBook.Env
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
         public DbSet<Aurthor> authors { get; set; }
-        public DbSet<Book> books { get; set; }
+        public DbSet<Book> book { get; set; }
     }
 }

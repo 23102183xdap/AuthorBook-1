@@ -36,13 +36,11 @@ namespace AuthorBook.Repository
             var author =  await _context.authors.ToListAsync();
             return author;
         }
-        public async Task<List<ActionResult>> getAuthorsBooks(int id)
+        public async Task<List<Book>> getAuthorsBooks(int id)
         {
-            Aurthor author = await _context.authors.Where(a => a.id == id).FirstOrDefaultAsync();
-
-                var books = await _context.books.Where(e => e.aurthorId == author.id).ToListAsync();
-
-            return null;
+            var author = await _context.authors.FindAsync(id);
+            var books = await _context.book.Where(a => a.aurthorId == author.id).ToListAsync();
+            return books;
         }
 
 
