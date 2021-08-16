@@ -13,9 +13,9 @@ namespace AuthorBook.Services
         //Methods goes here.
         Task<Aurthor> createAuthor(Aurthor author);
         Task<AuthorDTO> getAuthorById(int id);
-        Task<List<AuthorDTO>> getAuthors(AuthorDTO authorDto);
+        Task<List<AuthorDTO>> getAuthors();
         Task<ActionResult> deleteAuthor(int id);
         Task<ActionResult> updateAuthor(int id, Aurthor author);
-        Task<ActionResult> getAuthorsBooks(int authorId);
+        Task<List<Book>> getAuthorsBooks(int authorId);
     }
 }

@@ -56,7 +56,7 @@ namespace AuthorBook.Controllers
 
         }
 
-        [HttpGet("{id}/book")]
+        [HttpGet("book/{id}")]
         public async Task<IActionResult> getAuthorBooks(int id)
         {
             try

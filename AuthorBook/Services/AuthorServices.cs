@@ -37,6 +37,7 @@ namespace AuthorBook.Services
 
         public async Task<AuthorDTO> getAuthorById(int id)
         {
+            Aurthor authorDto = await _authorRepository.getAuthor(id);
             AuthorDTO dto = new AuthorDTO
             {
                 firstname = authorDto.firstname,
@@ -47,23 +48,26 @@ namespace AuthorBook.Services
             
         }
 
-        public async Task<List<AuthorDTO>> getAuthors(AuthorDTO authorDto)
+        public async Task<List<AuthorDTO>> getAuthors()
         {
             List<Aurthor> authorsList = await _authorRepository.getAuthors();
-            List<AuthorDTO> dto = (List<AuthorDTO>)authorsList.Select(s => new AuthorDTO { firstname = authorDto.firstname, lastname = authorDto.lastname }) ;
+            List<AuthorDTO> dto = authorsList.Select(x => new AuthorDTO() { firstname = x.firstname, lastname = x.lastname }).ToList();
+            
 
             return dto;
 
         }
 
-        public Task<ActionResult> getAuthorsBooks(int authorId)
+        public async Task<List<Book>> getAuthorsBooks(int authorId)
         {
-            throw new NotImplementedException();
+            List<Book> authorsBook = await _authorRepository.getAuthorsBooks(authorId);
+            return authorsBook;
         }
 
-        public Task<ActionResult> updateAuthor(int id, Aurthor author)
+        public async Task<ActionResult> updateAuthor(int id, Aurthor author)
         {
-            throw new NotImplementedException();
+            ActionResult updateAuthor = await _authorRepository.updateAuthor(id,author);
+            return updateAuthor;
         }
     }
 }

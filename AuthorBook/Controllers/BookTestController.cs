@@ -96,7 +96,7 @@ namespace AuthorBook.Controllers
             }
 
         }
-        [HttpGet("{id}/Aurthor")]
+        [HttpGet("Aurthor/{id}")]
         public async Task<ActionResult<Aurthor>> getBooksAuthor(int id)
         {
             try
